@@ -7,6 +7,7 @@ public class Auteur
     // variables d'instance - remplacez l'exemple qui suit par le vôtre
     private String nom;
     private List<String> livres;
+    private MaisonEdition edition;
 
     /**
      * Constructeur d'objets de classe Auteur
@@ -16,6 +17,8 @@ public class Auteur
         // initialisation des variables d'instance
         nom = "";
         livres = new ArrayList<String>();
+        edition = new MaisonEdition();
+        edition.ajouterAuteur(this);
     }
 
     public int nombreLivres()
@@ -50,4 +53,13 @@ public class Auteur
         this.nom = nom;
     }
 
+    public MaisonEdition getEdition(){
+        return edition;
+    }
+
+    public void setEdition(MaisonEdition edition){
+        this.edition = edition;
+    }
+
 }
+
