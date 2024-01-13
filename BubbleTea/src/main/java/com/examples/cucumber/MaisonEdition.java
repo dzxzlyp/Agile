@@ -1,9 +1,13 @@
 package com.examples.cucumber;
 
+import com.examples.cucumber.Auteur;
+
+import java.util.*;
+
 public class MaisonEdition
 {
     // variables d'instance - remplacez l'exemple qui suit par le vôtre
-    private Auteur auteur;
+    private List<Auteur> auteurs;
     private String reputation;
 
     /**
@@ -11,13 +15,23 @@ public class MaisonEdition
      */
     public MaisonEdition()
     {
-        auteur = new Auteur();
+        auteurs = new ArrayList<Auteur>();
         reputation = "Moyen";
+    }
+
+    public void ajouterAuteur(Auteur auteur){
+        auteurs.add(auteur);
+        auteur.setEdition(this);
+    }
+
+    public void supprimerAuteur(Auteur auteur){
+        auteurs.remove(auteur);
+        auteur.setEdition(null);
     }
 
     public void updateReputation()
     {
-        int nbLivres = auteur.nombreLivres();
+        int nbLivres = getNbLivres();
         if (nbLivres<5){
             setReputation("Faible");
         }
@@ -29,16 +43,19 @@ public class MaisonEdition
         }
     }
 
-    public Auteur getAuteur(){
-        return auteur;
+    private int getNbLivres() {
+        int nbLivres = 0;
+        for (Auteur auteur: auteurs)
+                nbLivres+=auteur.nombreLivres();
+        return nbLivres;
+    }
+
+    public List<Auteur> getAuteurs(){
+        return auteurs;
     }
 
     public String getReputation(){
         return reputation;
-    }
-
-    public void setAuteur(Auteur auteur){
-        this.auteur = auteur;
     }
 
     public void setReputation(String reputation){
