@@ -1,8 +1,6 @@
-package com.examples.cucumber;
-
 import java.util.*;
 
-public class Auteur
+public class Auteur implements Observer
 {
     // variables d'instance - remplacez l'exemple qui suit par le vôtre
     private String nom;
@@ -12,10 +10,10 @@ public class Auteur
     /**
      * Constructeur d'objets de classe Auteur
      */
-    public Auteur()
+    public Auteur(String nomAuteur)
     {
         // initialisation des variables d'instance
-        nom = "";
+        nom = nomAuteur;
         livres = new ArrayList<String>();
         edition = new MaisonEdition();
         edition.ajouterAuteur(this);
@@ -61,5 +59,13 @@ public class Auteur
         this.edition = edition;
     }
 
-}
+    @Override
+    public void updatePromotionChanges(String newPromotion) {
+        if (this.getNom() != null) {
+            System.out.println("Auteur " + this.getNom() + " informé des changements de promotion. " + newPromotion);
+        } else {
+            System.out.println("Auteur informé des changements de promotion. " + newPromotion);
+        }
+    }
 
+}
