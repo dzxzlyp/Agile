@@ -1,14 +1,9 @@
-package com.examples.cucumber;
-
-import com.examples.cucumber.Auteur;
-
 import java.util.*;
-
-public class MaisonEdition
-{
+public class MaisonEdition {
     // variables d'instance - remplacez l'exemple qui suit par le vôtre
     private List<Auteur> auteurs;
     private String reputation;
+    private List<Observer> promoObservers = new ArrayList<>();
 
     /**
      * Constructeur d'objets de classe MaisonEdition
@@ -16,7 +11,7 @@ public class MaisonEdition
     public MaisonEdition()
     {
         auteurs = new ArrayList<Auteur>();
-        reputation = "Moyen";
+        reputation = "Faible";
     }
 
     public void ajouterAuteur(Auteur auteur){
@@ -28,7 +23,6 @@ public class MaisonEdition
         auteurs.remove(auteur);
         auteur.setEdition(null);
     }
-
     public void updateReputation()
     {
         int nbLivres = getNbLivres();
@@ -36,17 +30,18 @@ public class MaisonEdition
             setReputation("Faible");
         }
         else if (nbLivres<10){
-            setReputation("Moyen");
+            setReputation("Moyenne");
         }
         else{
             setReputation("Forte");
         }
+        notifyObservers();
     }
 
-    private int getNbLivres() {
+    public int getNbLivres() {
         int nbLivres = 0;
         for (Auteur auteur: auteurs)
-                nbLivres+=auteur.nombreLivres();
+            nbLivres+=auteur.nombreLivres();
         return nbLivres;
     }
 
@@ -61,4 +56,32 @@ public class MaisonEdition
     public void setReputation(String reputation){
         this.reputation = reputation;
     }
+
+    // fonctions qui permettent d'ajouter et de supprimer des auteurs qui sont intéressés par les changements de promotions
+    public void addObserver(Observer observer) {
+        promoObservers.add(observer);
+    }
+
+    public void removeObserver(Observer observer) {
+        promoObservers.remove(observer);
+    }
+
+    public void notifyObservers() {
+        String newPromotion = getPromotionForBubbleTea();
+        for (Observer observer : promoObservers) {
+            observer.updatePromotionChanges(newPromotion);
+        }
+    }
+
+    public String getPromotionForBubbleTea() {
+        String reputationLowerCase = reputation.toLowerCase();
+        if ("forte".equals(reputationLowerCase)) {
+            return "Promotion : 20% de réduction sur tous les Bubble Tea !";
+        } else if ("moyenne".equals(reputationLowerCase)) {
+            return "Promotion : 10% de réduction sur tous les Bubble Tea !";
+        } else {
+            return "Aucune promotion";
+        }
+    }
+
 }
