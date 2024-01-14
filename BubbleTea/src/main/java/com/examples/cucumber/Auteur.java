@@ -10,6 +10,14 @@ public class Auteur implements Observer
     /**
      * Constructeur d'objets de classe Auteur
      */
+     public Auteur()
+    {
+        // initialisation des variables d'instance
+        nom = "";
+        livres = new ArrayList<String>();
+        edition = new MaisonEdition();
+        edition.ajouterAuteur(this);
+    }
     public Auteur(String nomAuteur)
     {
         // initialisation des variables d'instance
