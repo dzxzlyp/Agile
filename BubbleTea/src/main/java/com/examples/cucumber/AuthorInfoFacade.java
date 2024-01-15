@@ -1,18 +1,16 @@
 package com.examples.cucumber;
 
 public class AuthorInfoFacade {
-    private AuthorTeaAdapter adapter;
+    private Auteur auteur;
+    private BubbleTea bubbleTea;
 
     public AuthorInfoFacade(Auteur auteur, BubbleTea bubbleTea){
-        this.adapter = new AuthorTeaAdapter(auteur, bubbleTea);
+        this.auteur = auteur;
+        this.bubbleTea = bubbleTea;
     }
 
     public String getAuthorInfo(){
-        String favoriteTeaName = adapter.getFavoriteTeaName();
-        double favoriteTeaPrice = adapter.getFavoriteTeaPrice();
-        int publishedBooksCount = adapter.getPublishedBooksCount();
-
-        return "Auteur" + adapter.getAuthorName() + "'s favorite bubble tea is: " + favoriteTeaName + ". Price : " + favoriteTeaPrice + ". \n Number of books published : " + publishedBooksCount;
+        return "Auteur" + auteur.getNom() + "'s favorite bubble tea is: " + bubbleTea.getName() + ". Price : " + bubbleTea.getPrice() + ". \n Number of books published : " + auteur.nombreLivres();
     }
-
 }
+
