@@ -2,8 +2,12 @@ package com.examples.cucumber;
 
 import junit.framework.TestCase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MaisonEditionTest extends TestCase {
     private MaisonEdition gallimard;
+    private List<Observer> promoObservers = new ArrayList<>();
 
     public MaisonEditionTest(){
         gallimard = new MaisonEdition();
@@ -45,6 +49,33 @@ public class MaisonEditionTest extends TestCase {
         gallimard.ajouterAuteur(sarah);
         gallimard.updateReputation();
         assertEquals(gallimard.getReputation(), "Forte");
+    }
+
+    public void testAddObserver() {
+        Auteur sarah = new Auteur();
+        promoObservers.add(sarah);
+        assert(promoObservers.contains(sarah));
+    }
+
+    public void testRemoveObserver() {
+        Auteur sarah = new Auteur();
+        promoObservers.add(sarah);
+        promoObservers.remove(sarah);
+        assert(!promoObservers.contains(sarah));
+    }
+
+    public void testNotifyObservers() {
+        String newPromotion = gallimard.getPromotionForBubbleTea();
+        for (Observer observer : promoObservers) {
+            observer.updatePromotionChanges(newPromotion);
+            assertEquals("Auteur informé des changements de promotion. " + newPromotion,observer.updatePromotionChanges(newPromotion));
+        }
+    }
+
+    public void testGetPromotionForBubbleTea() {
+        String newPromotion = gallimard.getPromotionForBubbleTea();
+        assertEquals("Aucune promotion",newPromotion);
+
     }
 
 }
