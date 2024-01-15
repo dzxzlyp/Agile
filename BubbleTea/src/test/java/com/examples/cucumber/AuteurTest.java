@@ -1,30 +1,73 @@
 package com.examples.cucumber;
 
-import junit.framework.TestCase;
+import java.util.*;
 
-public class AuteurTest extends TestCase {
-    Auteur lisa;
-    public AuteurTest(){
-        lisa = new Auteur();
-        lisa.ajouterLivre("La guerre des clans");
-        lisa.ajouterLivre("Tara Duncan");
-        lisa.ajouterLivre("A fleur de toi");
+public class Auteur implements Observer
+{
+    // variables d'instance - remplacez l'exemple qui suit par le vôtre
+    private String nom;
+    private List<String> livres;
+    private MaisonEdition edition;
+
+    /**
+     * Constructeur d'objets de classe Auteur
+     */
+    public Auteur()
+    {
+        // initialisation des variables d'instance
+        nom = "";
+        livres = new ArrayList<String>();
+        edition = new MaisonEdition();
+        edition.ajouterAuteur(this);
     }
 
-    public void testNombreLivres() {
-        int nbLivres = lisa.nombreLivres();
-        assertEquals(nbLivres, 3);
+    public int nombreLivres()
+    {
+        return livres.size();
     }
 
-    public void testAjouterLivre() {
-        lisa.ajouterLivre("Six of Crows");
-        assert(lisa.getLivres().contains("Six of Crows"));
+    public void ajouterLivre(String titre) {
+        // Implémentation pour ajouter un livre à la liste
+        livres.add(titre);
     }
 
+    public void ajouterLivres(List<String> listeLivres){
+        for (String livre: listeLivres){
+            ajouterLivre(livre);
+        }
+    }
 
-    public void testSupprimerLivre() {
-        lisa.supprimerLivre("A fleur de toi");
-        assert(!lisa.getLivres().contains("A fleur de toi"));
+    public void supprimerLivre(String titre) {
+        livres.remove(titre);
+    }
+
+    public String getNom(){
+        return nom;
+    }
+
+    public List<String> getLivres(){
+        return livres;
+    }
+
+    public void setNom(String nom){
+        this.nom = nom;
+    }
+
+    public MaisonEdition getEdition(){
+        return edition;
+    }
+
+    public void setEdition(MaisonEdition edition){
+        this.edition = edition;
+    }
+
+    @Override
+    public String updatePromotionChanges(String newPromotion) {
+        if (this.getNom() != null) {
+            return "Auteur " + this.getNom() + " informé des changements de promotion. " + newPromotion;
+        } else {
+            return "Auteur informé des changements de promotion. " + newPromotion;
+        }
     }
 
 }
