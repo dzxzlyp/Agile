@@ -29,7 +29,7 @@ public class MyStepdefsReputation {
     public void anAuthorWroteTheFollowingBooks(List<String> livres) {
         auteur = new Auteur();
         edition = new MaisonEdition();
-        edition.setAuteur(auteur);
+        edition.ajouterAuteur(auteur);
         auteur.ajouterLivres(livres);
     }
 }
