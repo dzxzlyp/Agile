@@ -1,3 +1,7 @@
 public interface Observer {
-    void updatePromotionChanges(String newPromotion);
+    String updatePromotionChanges(String newPromotion);
 }
+
+
+
+
